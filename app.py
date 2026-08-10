@@ -5,6 +5,11 @@ from kalkulator import (
     sin, cos, tan, log, ln
 )
 
+if "memory" not in st.session_state:
+    st.session_state.memory = 0.0
+if "last_result" not in st.session_state:
+    st.session_state.last_result = None
+
 st.title("🧮 Kalkulator Scientific")
 st.write("Kalkulator scientific berbasis web — project belajar Python & Streamlit.")
 
@@ -63,4 +68,30 @@ if st.button("Hitung"):
     elif operasi == "Ln (natural)":
         hasil = ln(angka1)
 
-    st.write("Hasil =", hasil)
+    st.session_state.last_result = hasil
+
+if st.session_state.last_result is not None:
+    hasil = st.session_state.last_result
+    if isinstance(hasil, (int,float)):
+        hasil = round(hasil, 10)
+    st.success(f"hasil = {hasil}")
+
+st.subheader("💾 Memori")
+
+c1, c2, c3, c4 = st.columns(4)
+with c1:
+    if st.button("M+"):
+        if isinstance(st.session_state.last_result, (int, float)):
+            st.session_state.memory += st.session_state.last_result
+with c2:
+    if st.button("M-"):
+        if isinstance(st.session_state.last_result, (int, float)):
+            st.session_state.memory -= st.session_state.last_result
+with c3:
+    if st.button("MR"):
+        st.session_state.last_result = st.session_state.memory
+with c4:
+    if st.button("MC"):
+        st.session_state.memory = 0.0
+
+st.info(f"🧠 Memori: {st.session_state.memory}")
