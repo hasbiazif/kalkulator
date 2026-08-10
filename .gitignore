@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Streamlit (file rahasia jangan diupload!)
+.streamlit/secrets.toml
+
+# Editor / OS
+.vscode/
+.DS_Store
+Thumbs.db
